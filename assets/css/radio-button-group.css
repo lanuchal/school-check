@@ -1,0 +1,55 @@
+
+input[type=radio] {
+  position: absolute;
+  visibility: hidden;
+  display: none;
+}
+
+label {
+  color: #666666;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 13px 20px;
+  margin: 0px;
+  background:#EEEEEE;
+}
+
+input[type=radio]:checked + label {
+  color: #ccc8ce;
+  background: #675f6b;
+}
+
+input[type=radio]:checked +label.success {
+  color: #FFFFFF;
+  background: #1CA345;
+}
+
+input[type=radio]:checked +label.danger {
+  color: #FFFFFF;
+  background: #DE3F44;
+}
+
+input[type=radio]:checked +label.info {
+  color: #FFFFFF;
+  background: #01A1B9;
+}
+
+input[type=radio]:checked +label.warning {
+  color: #333333;
+  background: #FFC001;
+}
+
+label + input[type=radio] + label {
+  border-left: solid 0px #675f6b;
+  padding: 13px 20px;
+  margin: 0px;
+}
+
+.radio-group {
+  border: solid 0px #EEE;
+  display: inline-block;
+  margin: 0px;
+  border-radius: 8px;
+  overflow: hidden;
+}

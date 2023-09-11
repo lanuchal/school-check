@@ -1,0 +1,77 @@
+.m-connent {
+  margin: 5rem 2rem;
+}
+.h-full {
+  height: 100vh;
+}
+.w-fix {
+  width: 30rem;
+}
+@media screen and (max-width: 600px) {
+  .w-fix {
+    width: 20rem;
+  }
+  .m-connent {
+    margin: 1rem 1rem;
+  }
+}
+
+.font-1,
+button {
+  font-family: "Prompt", sans-serif;
+}
+
+strong {
+  font-weight: 600 !important;
+}
+
+.btn.btn-primary {
+  color: #fff;
+  background-color: #9c27b0;
+  border-color: #bc1ed7;
+  box-shadow: 0 2px 2px 0 rgb(156, 39, 176),
+    0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+}
+
+.sidebar[data-color="purple"] li.active > a {
+  background-color: #9c27b0;
+  box-shadow: 0 4px 20px 0px rgb(194, 25, 222),
+    0 7px 10px -5px rgba(156, 39, 176, 0.4);
+}
+
+.card .card-header-primary .card-icon,
+.card .card-header-primary .card-text,
+.card .card-header-primary:not(.card-header-icon):not(.card-header-text),
+.card.bg-primary,
+.card.card-rotate.bg-primary .front,
+.card.card-rotate.bg-primary .back {
+  background: linear-gradient(60deg, #9c27b0, #c418e1);
+}
+
+.text-primary {
+  color: #9c27b0 !important;
+}
+
+.text-warning {
+  color: #ff9800 !important;
+}
+
+.text-danger {
+  color: #f44336 !important;
+}
+
+.text-success {
+  color: #9c27b0 !important;
+}
+
+.text-info {
+  color: #00bcd4 !important;
+}
+
+.text-rose {
+  color: #e91e63 !important;
+}
+
+.text-gray {
+  color: #999999 !important;
+}
