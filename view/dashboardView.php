@@ -22,7 +22,7 @@
                                     if ($old_reat != substr($row['IDYearData'], 0, 1)) {
                                         $old_reat = substr($row['IDYearData'], 0, 1);
                                         ?>
-                                        <option value="<?php echo substr($row['IDYearData'], 0, 1) ?>" <?php if ($_POST['rate'] == substr($row['IDYearData'], 0, 1))
+                                        <option value="<?php echo substr($row['IDYearData'], 0, 1) ?>" <?php if ($valRate == substr($row['IDYearData'], 0, 1))
                                                  echo "selected"; ?>>
                                             <?php echo substr($row['IDYearData'], 0, 1); ?>
                                         </option>
@@ -40,7 +40,7 @@
                                     if ($old_yaer != substr($row['IDYearData'], 1, 4)) {
                                         $old_yaer = substr($row['IDYearData'], 1, 4);
                                         ?>
-                                        <option value="<?php echo substr($row['IDYearData'], 1, 4) ?>" <?php if ($_POST['yaer'] == substr($row['IDYearData'], 1, 4))
+                                        <option value="<?php echo substr($row['IDYearData'], 1, 4) ?>" <?php if ($valYear == substr($row['IDYearData'], 1, 4))
                                                  echo "selected"; ?>>
                                             <?php echo substr($row['IDYearData'], 1, 4); ?>
                                         </option>
@@ -58,7 +58,7 @@
                                     if ($old_term != substr($row['IDYearData'], 5, 1)) {
                                         $old_term = substr($row['IDYearData'], 5, 1);
                                         ?>
-                                        <option value="<?php echo substr($row['IDYearData'], 5, 1) ?>" <?php if ($_POST['term'] == substr($row['IDYearData'], 5, 1))
+                                        <option value="<?php echo substr($row['IDYearData'], 5, 1) ?>" <?php if ($valTerm == substr($row['IDYearData'], 5, 1))
                                                  echo "selected"; ?>>
                                             <?php echo substr($row['IDYearData'], 5, 1); ?>
                                         </option>
@@ -77,7 +77,7 @@
                                     if ($old_class != substr($row['IDYearData'], 6, 5)) {
                                         $old_class = substr($row['IDYearData'], 6, 5);
                                         ?>
-                                        <option value="<?php echo substr($row['IDYearData'], 6, 5) ?>" <?php if ($_POST['class'] == substr($row['IDYearData'], 6, 5))
+                                        <option value="<?php echo substr($row['IDYearData'], 6, 5) ?>" <?php if ($valClass == substr($row['IDYearData'], 6, 5))
                                                  echo "selected"; ?>>
                                             <?php echo substr($row['IDYearData'], 6, 5); ?>
                                         </option>
@@ -86,7 +86,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label for="room">ห้อง</label>
                             <select name="room" id="room" class="form-control">
                                 <?php
@@ -95,7 +95,7 @@
                                     if ($old_room != substr($row['IDYearData'], 11, 2)) {
                                         $old_room = substr($row['IDYearData'], 11, 2);
                                         ?>
-                                        <option value="<?php echo substr($row['IDYearData'], 11, 2) ?>" <?php if ($_POST['room'] == substr($row['IDYearData'], 11, 2))
+                                        <option value="<?php echo substr($row['IDYearData'], 11, 2) ?>" <?php if ($valRoom == substr($row['IDYearData'], 11, 2))
                                                  echo "selected"; ?>>
                                             <?php echo substr($row['IDYearData'], 11, 2); ?>
                                         </option>
@@ -103,6 +103,14 @@
                                 } ?>
                             </select>
                         </div>
+
+
+                        <div class="col-md-1">
+                            <label for="period">คาบที่</label>
+                            <input type="number" id="period" class="form-control mt-1" name="period"
+                                value="<?php echo $valPeriod ?>" required>
+                        </div>
+
 
                         <div class="col-md-2">
                             <button class="btn btn-success mt-4 w-100" type="submit">ค้นหา</button>
@@ -114,8 +122,10 @@
                 <div class="row">
                     <?php
                     if (count($resultStudent) != 0) {
-                        foreach ($resultStudent as $rowStudent) { ?>
-                            <div class="col-md-2 col-12 text-center"></div>
+                        foreach ($resultStudent as $key => $rowStudent) { ?>
+                            <div class="col-md-2 col-12 text-right text-primary"><b>คาบที่ : </b>
+                                <?php echo $valPeriod ?>
+                            </div>
                             <div class="col-md-4 col-12 text-center">
                                 <h4>
                                     <?php echo $rowStudent['PreName'] ?>
@@ -124,13 +134,40 @@
                                 </h4>
                             </div>
                             <div class="col-md-5 col-12 text-center">
-                                <button class="btn-md btn btn-outline-success py-2 px-3"> <h5 class="p-0 m-0">มา</h5> </button>
-                                <button class="btn-md btn btn-outline-primary py-2 px-3"><h5 class="p-0 m-0">ขาด</h5></button>
-                                <button class="btn-md btn btn-outline-warning py-2 px-3"><h5 class="p-0 m-0">ลา</h5></button>
-                                <button class="btn-md btn btn-outline-info py-2 px-3"><h5 class="p-0 m-0">ป่วย</h5></button>
+                                <button class="btn-md btn  py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '4') {
+                                    echo "btn-success ";
+                                } else {
+                                    echo "btn-outline-success ";
+                                } ?>" id="btnOn<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
+                                    onclick="handleCilckOn('<?php echo $resultgetSetColorToView[$key]['ID'] ?>')">
+                                    <h5 class="p-0 m-0">มา</h5>
+                                </button>
+                                <button class="btn-md btn py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '1') {
+                                    echo "btn-primary ";
+                                } else {
+                                    echo "btn-outline-primary ";
+                                } ?>" id="btnMiss<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
+                                    onclick="handleCilckMiss(<?php echo $resultgetSetColorToView[$key]['ID'] ?>)">
+                                    <h5 class="p-0 m-0">ขาด</h5>
+                                </button>
+                                <button class="btn-md btn  py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '3') {
+                                    echo "btn-warning ";
+                                } else {
+                                    echo "btn-outline-warning ";
+                                } ?>" id="btnLeave<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
+                                    onclick="handleCilckLeave('<?php echo $resultgetSetColorToView[$key]['ID'] ?>')">
+                                    <h5 class="p-0 m-0">ลา</h5>
+                                </button>
+                                <button class="btn-md btn py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '2') {
+                                    echo "btn-info ";
+                                } else {
+                                    echo "btn-outline-info ";
+                                } ?>" id="btnSick<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
+                                    onclick="handleCilckSick('<?php echo $resultgetSetColorToView[$key]['ID'] ?>')">
+                                    <h5 class="p-0 m-0">ป่วย</h5>
+                                </button>
                             </div>
                             <div class="col-md-1 col-12 text-center"></div>
-
                             <hr>
                         <?php }
                     } else {
