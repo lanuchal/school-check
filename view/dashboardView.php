@@ -48,8 +48,21 @@
                                 } ?>
                             </select>
                         </div>
-
                         <div class="col-md-2">
+                            <label for="PSubjectCode">วิชา</label>
+                            <select name="PSubjectCode" id="PSubjectCode" class="form-control">
+                                <?php
+
+                                foreach ($resultsPSubjectCode as $row) { ?>
+                                    <option value="<?php echo $row['PSubjectCode'] ?>" <?php if ($valPSubjectCode == $row['PSubjectCode'])
+                                           echo "selected"; ?>>
+                                        <?php echo $row['PSubjectCode'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-1">
                             <label for="term">เทอม</label>
                             <select name="term" id="term" class="form-control">
                                 <?php
@@ -68,7 +81,7 @@
                         </div>
 
 
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label for="class">ชั้น</label>
                             <select name="class" id="class" class="form-control">
                                 <?php
@@ -122,12 +135,14 @@
                 <div class="row">
                     <?php
                     if (count($resultStudent) != 0) {
-                        foreach ($resultStudent as $key => $rowStudent) { ?>
+                        foreach ($resultStudent as $key => $rowStudent) {
+                            $idStuden = $rowStudent['IDStudent']; ?>
                             <div class="col-md-2 col-12 text-right text-primary"><b>คาบที่ : </b>
                                 <?php echo $valPeriod ?>
                             </div>
                             <div class="col-md-4 col-12 text-center">
-                                <h4>
+                                <h4>รหัส :
+                                    <?php echo $idStuden ?> ->
                                     <?php echo $rowStudent['PreName'] ?>
                                     <?php echo $rowStudent['NameFirst'] ?>
                                     <?php echo $rowStudent['NameLast'] ?>
@@ -139,7 +154,7 @@
                                 } else {
                                     echo "btn-outline-success ";
                                 } ?>" id="btnOn<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
-                                    onclick="handleCilckOn('<?php echo $resultgetSetColorToView[$key]['ID'] ?>')">
+                                    onclick="handleCilckOn('<?php echo $resultgetSetColorToView[$key]['ID'] ?>','<?php echo $rowStudent['IDYearData'] ?>','<?php echo $rowStudent['PSubjectCode'] ?>','<?php echo $idStuden ?>')">
                                     <h5 class="p-0 m-0">มา</h5>
                                 </button>
                                 <button class="btn-md btn py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '1') {
@@ -147,7 +162,7 @@
                                 } else {
                                     echo "btn-outline-primary ";
                                 } ?>" id="btnMiss<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
-                                    onclick="handleCilckMiss(<?php echo $resultgetSetColorToView[$key]['ID'] ?>)">
+                                    onclick="handleCilckMiss('<?php echo $resultgetSetColorToView[$key]['ID'] ?>','<?php echo $rowStudent['IDYearData'] ?>','<?php echo $rowStudent['PSubjectCode'] ?>','<?php echo $idStuden ?>')">
                                     <h5 class="p-0 m-0">ขาด</h5>
                                 </button>
                                 <button class="btn-md btn  py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '3') {
@@ -155,7 +170,7 @@
                                 } else {
                                     echo "btn-outline-warning ";
                                 } ?>" id="btnLeave<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
-                                    onclick="handleCilckLeave('<?php echo $resultgetSetColorToView[$key]['ID'] ?>')">
+                                    onclick="handleCilckLeave('<?php echo $resultgetSetColorToView[$key]['ID'] ?>','<?php echo $rowStudent['IDYearData'] ?>','<?php echo $rowStudent['PSubjectCode'] ?>','<?php echo $idStuden ?>')">
                                     <h5 class="p-0 m-0">ลา</h5>
                                 </button>
                                 <button class="btn-md btn py-2 px-3 <?php if ($resultgetSetColorToView[$key]['CodeReasonAbsent'] == '2') {
@@ -163,7 +178,7 @@
                                 } else {
                                     echo "btn-outline-info ";
                                 } ?>" id="btnSick<?php echo $resultgetSetColorToView[$key]['ID'] ?>"
-                                    onclick="handleCilckSick('<?php echo $resultgetSetColorToView[$key]['ID'] ?>')">
+                                    onclick="handleCilckSick('<?php echo $resultgetSetColorToView[$key]['ID'] ?>','<?php echo $rowStudent['IDYearData'] ?>','<?php echo $rowStudent['PSubjectCode'] ?>','<?php echo $idStuden ?>')">
                                     <h5 class="p-0 m-0">ป่วย</h5>
                                 </button>
                             </div>

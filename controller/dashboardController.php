@@ -9,19 +9,19 @@ $valYear = !empty($_POST['yaer']) ? $_POST['yaer'] : '';
 $valTerm = !empty($_POST['term']) ? $_POST['term'] : '';
 $valClass = !empty($_POST['class']) ? $_POST['class'] : '';
 $valRoom = !empty($_POST['room']) ? $_POST['room'] : '';
+$valPSubjectCode = !empty($_POST['PSubjectCode']) ? $_POST['PSubjectCode'] : '';
+
 $valPeriod = !empty($_POST['period']) ? $_POST['period'] : '1';
 
 if (!empty($_POST['rate']) && !empty($_POST['yaer']) && !empty($_POST['term']) && !empty($_POST['class']) && !empty($_POST['room'])) {
     $IDYeadDataSelect = $_POST['rate'] . $_POST['yaer'] . $_POST['term'] . $_POST['class'] . $_POST['room'];
-    $resultStudent = getIDYearDataById($IDYeadDataSelect, $valPeriod);
-    $resultgetSetColorToView = getSetColorToView($IDYeadDataSelect, $valPeriod);
-    // print_r($resultgetSetColorToView[0]['CodeReasonAbsent']);
-    // exit();
-
+    $resultStudent = getIDYearDataById($IDYeadDataSelect, $valPeriod, $valPSubjectCode);
+    $resultgetSetColorToView = getSetColorToView($IDYeadDataSelect, $valPeriod, $valPSubjectCode);
 }
 
 
 $resultsIDYearData = getIDYearData();
+$resultsPSubjectCode = getIPSubjectCode();
 
 if (empty($resultsIDYearData)) {
     echo " <div class='card text-danger p-5 text-center'> <h3>ไม่มีข้อมูลการลงทะเบียน</h3> </div> ";
@@ -68,7 +68,8 @@ if (empty($resultsIDYearData)) {
             btnSick.classList.add("btn-info");
         }
     }
-    const handleCilckOn = (id) => {
+    const handleCilckOn = (id, idYearData, subjectCode, idStudent) => {
+
         $.ajax({
             type: "POST",
             url: "?p=dashboard&action=checkOn",
@@ -76,9 +77,13 @@ if (empty($resultsIDYearData)) {
                 id: id,
                 detail: "มาทันเวลา",
                 code: 4,
+                idYearData: idYearData,
+                pSunjectCode: subjectCode,
+                idStudent: idStudent,
             },
             dataType: "json",
             success: function (response) {
+                // console.log(response)
                 if (response.result) {
                     setBtnColor(id, "btnOn")
                 } else {
@@ -91,7 +96,9 @@ if (empty($resultsIDYearData)) {
         });
     }
 
-    const handleCilckMiss = (id) => {
+    const handleCilckMiss = (id, idYearData, subjectCode, idStudent) => {
+        // console.log(id, idYearData, subjectCode, idStudent)
+        // return
         $.ajax({
             type: "POST",
             url: "?p=dashboard&action=checkOn",
@@ -99,9 +106,13 @@ if (empty($resultsIDYearData)) {
                 id: id,
                 detail: "ขาด",
                 code: 1,
+                idYearData: idYearData,
+                pSunjectCode: subjectCode,
+                idStudent: idStudent
             },
             dataType: "json",
             success: function (response) {
+                // console.log(response)
                 if (response.result) {
                     setBtnColor(id, "btnMiss")
                 } else {
@@ -115,7 +126,8 @@ if (empty($resultsIDYearData)) {
 
     }
 
-    const handleCilckLeave = (id) => {
+    const handleCilckLeave = (id, idYearData, subjectCode, idStudent) => {
+
         $.ajax({
             type: "POST",
             url: "?p=dashboard&action=checkOn",
@@ -123,9 +135,13 @@ if (empty($resultsIDYearData)) {
                 id: id,
                 detail: "ลา",
                 code: 3,
+                idYearData: idYearData,
+                pSunjectCode: subjectCode,
+                idStudent: idStudent
             },
             dataType: "json",
             success: function (response) {
+                // console.log(response)
                 if (response.result) {
                     setBtnColor(id, "btnLeave")
                 } else {
@@ -138,7 +154,8 @@ if (empty($resultsIDYearData)) {
         });
     }
 
-    const handleCilckSick = (id) => {
+    const handleCilckSick = (id, idYearData, subjectCode, idStudent) => {
+
         $.ajax({
             type: "POST",
             url: "?p=dashboard&action=checkOn",
@@ -146,9 +163,13 @@ if (empty($resultsIDYearData)) {
                 id: id,
                 detail: "ป่วย",
                 code: 2,
+                idYearData: idYearData,
+                pSunjectCode: subjectCode,
+                idStudent: idStudent
             },
             dataType: "json",
             success: function (response) {
+                // console.log(response)
                 if (response.result) {
                     setBtnColor(id, "btnSick")
                 } else {
